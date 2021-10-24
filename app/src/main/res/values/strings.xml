@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">eratosfen</string>
+    <string name="count">Count</string>
+    <string name="count_async">Count async</string>
+    <string name="click_me">Click me</string>
+    <string name="time_calculation">Time calculation:</string>
 </resources>
