@@ -4,4 +4,9 @@
     <string name="count_async">Count async</string>
     <string name="click_me">Click me</string>
     <string name="time_calculation">Time calculation:</string>
+    <string name="action_yes">Yes</string>
+    <string name="action_no">No</string>
+    <string name="result_title">Question</string>
+    <string name="result_message">Run execution</string>
+    <string name="action_ignore">No</string>
 </resources>

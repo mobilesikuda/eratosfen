@@ -1,12 +1,13 @@
 package ru.sikuda.mobile.eratosfen
 
 import android.annotation.SuppressLint
+import android.content.ContentValues.TAG
+import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.TextView
-import androidx.activity.viewModels
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.DataBindingUtil.*
+import android.util.Log
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import ru.sikuda.mobile.eratosfen.databinding.ActivityMainBinding
 import java.lang.Math.random
@@ -29,11 +30,36 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         viewModel.settext.observe(this) {
-            showText(it)
+            showTextResult(it)
         }
 
         binding.button.setOnClickListener {
-            viewModel.RunCalcSync()
+
+            val listener = DialogInterface.OnClickListener { _, which ->
+                when (which) {
+                    DialogInterface.BUTTON_POSITIVE -> viewModel.RunCalcSync()
+                    DialogInterface.BUTTON_NEGATIVE,
+                    DialogInterface.BUTTON_NEUTRAL -> {
+                        Toast.makeText(this, "May be next time", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+
+            val dialog = AlertDialog.Builder(this)
+                .setCancelable(true)
+                .setIcon(R.mipmap.ic_launcher_round)
+                .setTitle(R.string.result_title)
+                .setMessage(R.string.result_message)
+                //.setNegativeButton(R.string.action_no, listener)
+                .setPositiveButton(R.string.action_yes, listener)
+                .setNeutralButton(R.string.action_ignore, listener)
+                .setOnDismissListener {
+                    Log.d(TAG, "Dialog dismissed")
+                }
+                .create()
+
+            dialog.show()
+
         }
 
         binding.button2.setOnClickListener {
@@ -45,52 +71,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun showText(text: String)  = with(binding) {
+    fun showTextResult(text: String)  = with(binding) {
         //val textView = findViewById<TextView>(R.id.textResult)
         binding.textResult.text = "Time ms:" + text
     }
 
-//    fun onCountClick(view: android.view.View) {
-//        //binding.textResult.setText("test1".toCharArray(), 1 , 100)
-//
-//        val diff = Calculate()
-//
-//        val textView = findViewById<TextView>(R.id.textResult)
-//        textView.text = "Time ms:" + diff.toString()
-//
-//    }
-
-
-//    fun Calculate(): Double {
-//
-//        val n: Int = 50_000_000
-//        //val n: Int = 50_000
-//        val array: Array<Int> = Array(n+1) { 1 }
-//        array[0] = 0
-//        array[1] = 0
-//
-//        println("Start")
-//        val timeBegin = System.currentTimeMillis()
-//        var i: Int = 2
-//        while ( i <= n ) {
-//            if (array[i] == 1) {
-//                val sq: Long = i.toLong() * i
-//                if (sq <= n) {
-//                    var m: Int = sq.toInt()
-//                    while (m <= n) {
-//                        array[m] = 0
-//                        m += i.toInt()
-//                    }
-//                }
-//            }
-//            i += 1
-//        }
-//        val timeEnd = System.currentTimeMillis()
-//        val diff: Double = (timeEnd.toDouble() - timeBegin) / 1000
-//
-//        return diff
-//        //textView =
-//        //binding.textResult.setText("test2")
-//    }
-
 }
+

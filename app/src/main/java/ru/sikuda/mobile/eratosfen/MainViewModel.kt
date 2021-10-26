@@ -23,35 +23,10 @@ class MainViewModel : ViewModel() {
     }
 
     fun RunCalcSync(){
+        sleep(1000)
         Calculate()
     }
 
-//    private suspend fun calculateSuspend(){
-//        val n: Int = 50_000_000
-//        val array: Array<Int> = Array(n+1) { 1 }
-//        array[0] = 0
-//        array[1] = 0
-//
-//        println("Start")
-//        val timeBegin = System.currentTimeMillis()
-//        var i: Int = 2
-//        while ( i <= n ) {
-//            if (array[i] == 1) {
-//                val sq: Long = i.toLong() * i
-//                if (sq <= n) {
-//                    var m: Int = sq.toInt()
-//                    while (m <= n) {
-//                        array[m] = 0
-//                        m += i
-//                    }
-//                }
-//            }
-//            i += 1
-//        }
-//        val timeEnd = System.currentTimeMillis()
-//        val diff: Double = (timeEnd.toDouble() - timeBegin) / 1000
-//        text.postValue(diff.toString())
-//    }
 
     private fun Calculate() {
 
