@@ -2,8 +2,10 @@ package ru.sikuda.mobile.eratosfen
 
 import android.os.SystemClock.sleep
 import androidx.lifecycle.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainViewModel : ViewModel() {
 
@@ -15,20 +17,22 @@ class MainViewModel : ViewModel() {
 
         viewModelScope.launch {
 
-            delay(3000)
-            text.postValue("3s emulate")
-            //calculateSuspend()
+            text.postValue("Async calc...")
+            val result = withContext( Dispatchers.Default ) {
+                //delay(3000)
+                return@withContext Calculate()
+            }
+            text.postValue("Async-"+result)
         }
-
     }
 
     fun RunCalcSync(){
-        sleep(1000)
-        Calculate()
+        text.setValue("Sync calc...")
+        text.setValue("Sync-"+Calculate())
     }
 
 
-    private fun Calculate() {
+    private fun Calculate(): String {
 
         val n = 50_000_000
         val array: Array<Int> = Array(n+1) { 1 }
@@ -53,6 +57,6 @@ class MainViewModel : ViewModel() {
         }
         val timeEnd = System.currentTimeMillis()
         val diff: Double = (timeEnd.toDouble() - timeBegin) / 1000
-        text.postValue(diff.toString())
+        return diff.toString()
     }
 }

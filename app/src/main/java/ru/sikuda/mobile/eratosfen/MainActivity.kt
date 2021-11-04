@@ -72,8 +72,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun showTextResult(text: String)  = with(binding) {
-        //val textView = findViewById<TextView>(R.id.textResult)
-        binding.textResult.text = "Time ms:" + text
+        binding.textResult.text = "Time sec:" + text
     }
 
 }
