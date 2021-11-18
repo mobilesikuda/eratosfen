@@ -12,7 +12,6 @@ import androidx.lifecycle.ViewModelProvider
 import ru.sikuda.mobile.eratosfen.databinding.ActivityMainBinding
 import java.lang.Math.random
 
-
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -33,7 +32,7 @@ class MainActivity : AppCompatActivity() {
             showTextResult(it)
         }
 
-        binding.button.setOnClickListener {
+        binding.buttonSync.setOnClickListener {
 
             val listener = DialogInterface.OnClickListener { _, which ->
                 when (which) {
@@ -50,7 +49,6 @@ class MainActivity : AppCompatActivity() {
                 .setIcon(R.mipmap.ic_launcher_round)
                 .setTitle(R.string.result_title)
                 .setMessage(R.string.result_message)
-                //.setNegativeButton(R.string.action_no, listener)
                 .setPositiveButton(R.string.action_yes, listener)
                 .setNeutralButton(R.string.action_ignore, listener)
                 .setOnDismissListener {
@@ -62,17 +60,18 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        binding.button2.setOnClickListener {
+        binding.buttonAsync.setOnClickListener {
             viewModel.RunCalc()
         }
 
-        binding.button3.setOnClickListener {
-            binding.button3.text = "Clickme-" + random().toString()
+        binding.buttonReact.setOnClickListener {
+            binding.buttonReact.text = "Clickme-" + random().toString()
         }
     }
 
+    @SuppressLint("SetTextI18n")
     fun showTextResult(text: String)  = with(binding) {
-        binding.textResult.text = "Time sec:" + text
+        binding.textResult.text = "Time sec:$text"
     }
 
 }

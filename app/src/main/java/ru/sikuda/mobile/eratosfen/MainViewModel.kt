@@ -1,9 +1,7 @@
 package ru.sikuda.mobile.eratosfen
 
-import android.os.SystemClock.sleep
 import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -13,25 +11,24 @@ class MainViewModel : ViewModel() {
     val settext: LiveData<String>
         get() = text
 
+    //run async routing
     fun RunCalc(){
-
         viewModelScope.launch {
-
             text.postValue("Async calc...")
             val result = withContext( Dispatchers.Default ) {
-                //delay(3000)
                 return@withContext Calculate()
             }
             text.postValue("Async-"+result)
         }
     }
 
+    //run sync routing
     fun RunCalcSync(){
         text.setValue("Sync calc...")
         text.setValue("Sync-"+Calculate())
     }
 
-
+    //run execution
     private fun Calculate(): String {
 
         val n = 50_000_000
@@ -39,7 +36,6 @@ class MainViewModel : ViewModel() {
         array[0] = 0
         array[1] = 0
 
-        //println("Start")
         val timeBegin = System.currentTimeMillis()
         var i = 2
         while ( i <= n ) {
